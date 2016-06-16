@@ -19,7 +19,6 @@ document.body.onmouseout = function(e){
     if (!tooltipNode) {
         return;
     }
-    console.log(tooltipNode);
     tooltipNode.parentElement.removeChild(tooltipNode);
 }
 

@@ -6,11 +6,31 @@ window.addEventListener("mouseover", function(event)
       link = link.parentNode;
     }
     if (link) {
-    	console.log(link.href)
-    	res = httpGet(link.href)	// no response
-    	console.log(res)
+    	console.log(link.href);
+    	res = httpGet(link.href);	// no response
+    	console.log(res);
+        show(link);
     }
 }, false);
+
+document.body.onmouseout = function(e){
+    var tooltipNode = e.target.querySelector('.tooltip');
+
+    if (!tooltipNode) {
+        return;
+    }
+    console.log(tooltipNode);
+    tooltipNode.parentElement.removeChild(tooltipNode);
+}
+
+function show(link)
+{
+    var tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    tooltip.innerHTML = '<div class="tooltip-loader">HELLO</div>';
+
+    link.appendChild(tooltip);
+}
 
 /* Doesn't Work */
 function httpGet(theUrl)

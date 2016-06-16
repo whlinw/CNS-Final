@@ -1,22 +1,20 @@
 {
   "manifest_version": 2,
 
-  "name": "Getting started example",
-  "description": "This extension shows a Google Image search result for the current page",
+  "name": "Short Url Previewer",
+  "description": "Short Url Previewer",
   "version": "1.0",
 
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "panel.html"
   },
-  // "permissions": [
-    // "activeTab",
-    // "https://ajax.googleapis.com/"
-  // ],
+  "permissions": ["tabs", "*://*/*", "identity", "*://*/*", "windows", "storage"],
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["script.js"]
+      "js": ["script.js"],
+      "css": ["styles.css"]
     }
   ]
 }

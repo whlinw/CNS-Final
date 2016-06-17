@@ -28,3 +28,14 @@ https://140.112.30.32:4443/expand?url=SHORTENED_URL
 ```
 https://140.112.30.32:4443/check?url=SHORTENED_URL
 ```
+
+##### Search on Google
+```
+https://140.112.30.32:4443/search?url=SHORTEN_URL
+```
+
+##### Analyze URL
+```
+https://140.112.30.32:4443/analyze?url=SHORTEN_URL
+```
+Return: (expanded url, check result, number of search result, result title, result content)

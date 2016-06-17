@@ -2,7 +2,9 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import ssl
 import urllib.parse as urlparse
 import http.client as httplib
+import json
 from check.urlcompare import urlcompare
+from search import search
 
 HOST = '140.112.30.32'
 PORT = 4443
@@ -13,24 +15,39 @@ USS = ['goo.gl', 'bit.ly', 'ppt.cc', 'tinyurl.com', '0rz.tw', 'ow.ly']
 class requestHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 		parsed_path = urlparse.urlparse(self.path)
-		res = 'None'
+		res = []
 
-		if parsed_path.path == '/expand':
+		if parsed_path.path == '/analyze':
 			url = parsed_path.query.split('=')[1]
 			while isShorten(url) == True:
 				_, url = get(url)
-			res = url
+			res.append(url)
+			prot, host, path = parseURL(url)
+			res.append(str(urlcompare(host)))
+			num, head, content = search(url)
+			res.append(num)
+			res.append(head)
+			res.append(content)
+		elif parsed_path.path == '/expand':
+			url = parsed_path.query.split('=')[1]
+			while isShorten(url) == True:
+				_, url = get(url)
+			res.append(url)
 		elif parsed_path.path == '/check':
 			url = parsed_path.query.split('=')[1]
 			_, domain, _=parseURL(url)
-			res = str(urlcompare(domain))
-		### Handle HTTP GET
-		# elif parsed_path.path =='/search':
+			res.append(str(urlcompare(domain)))
+		elif parsed_path.path == '/search':
+			url = parsed_path.query.split('=')[1]
+			num, head, content = search(url)
+			res.append(num)
+			res.append(head)
+			res.append(content)
 		
 		self.send_response(200)
 		self.end_headers()
-		self.wfile.write(res.encode("utf-8"))
-
+		result = '\n'.join(res)
+		self.wfile.write(result.encode('utf-8'))
 		return
 
 def parseURL(url):

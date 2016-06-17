@@ -23,3 +23,8 @@ $ python server.py
 ```
 https://140.112.30.32:4443/expand?url=SHORTENED_URL
 ```
+
+##### Check if the URL domain is evil
+```
+https://140.112.30.32:4443/check?url=SHORTENED_URL
+```

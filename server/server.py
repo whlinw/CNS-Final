@@ -2,6 +2,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import ssl
 import urllib.parse as urlparse
 import http.client as httplib
+from check.urlcompare import urlcompare
 
 HOST = '140.112.30.32'
 PORT = 4443
@@ -19,6 +20,10 @@ class requestHandler(BaseHTTPRequestHandler):
 			while isShorten(url) == True:
 				_, url = get(url)
 			res = url
+		elif parsed_path.path == '/check':
+			url = parsed_path.query.split('=')[1]
+			_, domain, _=parseURL(url)
+			res = str(urlcompare(domain))
 		### Handle HTTP GET
 		# elif parsed_path.path =='/search':
 		

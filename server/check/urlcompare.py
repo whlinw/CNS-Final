@@ -4,10 +4,10 @@ import os
 #True = evil url
 def urlcompare(url):
 	file_count = 0
-	for i in os.listdir('./blacklists'):
-		if os.path.isdir('./blacklists' + '/' + i):
-			for j in os.listdir('./blacklists' + '/' + i):
-				with open('./blacklists' + '/' + i + '/' + j) as f:
+	for i in os.listdir('./check/blacklists'):
+		if os.path.isdir('./check/blacklists/' + i):
+			if 'domains' in os.listdir('./check/blacklists/' + i):
+				with open('./check/blacklists/' + i + '/domains') as f:
 					for line in f:
 						file_count = file_count + 1
 						if url == line[:-1]:

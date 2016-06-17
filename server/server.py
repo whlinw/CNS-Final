@@ -3,7 +3,7 @@ import ssl
 import urllib.parse as urlparse
 import http.client as httplib
 
-HOST = '140.112.30.39'
+HOST = '140.112.30.32'
 PORT = 4443
 
 # List of URL shorten service

@@ -4,10 +4,10 @@
 
 ## Server
 
-Default address: 140.112.30.39, port=4443
+Default address: 140.112.30.32, port=4443
 
 ##### Set up the server
-* ssh linux1.ntu.edu.tw
+* ssh linux1.csie.ntu.edu.tw
 
 * Generate certificate
 ```
@@ -21,5 +21,5 @@ $ python server.py
 
 ##### Get the expanded URL
 ```
-https://140.112.30.39:4443/expand?url=SHORTENED_URL
+https://140.112.30.32:4443/expand?url=SHORTENED_URL
 ```

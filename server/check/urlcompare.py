@@ -1,13 +1,14 @@
 import os
+import sys
 
 #throw target url into urlcompare, the function would check if the url is in blacklists
 #True = evil url
 def urlcompare(url):
 	file_count = 0
-	for i in os.listdir('./check/blacklists'):
-		if os.path.isdir('./check/blacklists/' + i):
-			if 'domains' in os.listdir('./check/blacklists/' + i):
-				with open('./check/blacklists/' + i + '/domains') as f:
+	for i in os.listdir('./blacklists'):
+		if os.path.isdir('./blacklists' + '/' + i):
+			for j in os.listdir('./blacklists' + '/' + i):
+				with open('./blacklists' + '/' + i + '/' + j) as f:
 					for line in f:
 						file_count = file_count + 1
 						if url == line[:-1]:
@@ -15,7 +16,12 @@ def urlcompare(url):
 	return False
 
 if __name__ == '__main__':
-	inBlacklist = urlcompare(url)
+	if sys.argv[1][0:3] == 'www':
+		url = sys.argv[1][4:]
+	else:
+		url = sys.argv[1]
+	inBlacklist,count= urlcompare(url)
+	print inBlacklist
 	
 
 

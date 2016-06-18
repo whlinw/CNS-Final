@@ -7,5 +7,6 @@ def makeHTML(content):
 	 '<h4>Search num</h4><p>' + res['num'] + '</p>' + \
 	 '<h4>Search title</h4><p>' + res['title'] + '</p>' + \
 	 '<h4>Search content</h4><p>' + res['content'] + '</p>' + \
+	 '<h4>SSL Grade</h4><p>' + res['grade'] + '</p>' + \
 	 '</body></html>'
 	return html

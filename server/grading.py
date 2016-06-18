@@ -58,7 +58,7 @@ def grading(url):
 
 if __name__ == '__main__':
 	result = grading(sys.argv[1])
-	print result
+	print(result)
 
 
 

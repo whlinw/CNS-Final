@@ -6,8 +6,9 @@ import json
 from urlcompare import urlcompare
 from search import search
 from makeHTML import makeHTML
+from grading import grading
 
-HOST = '140.112.30.32'
+HOST = '140.112.30.39'
 PORT = 4443
 
 # List of URL shorten service
@@ -30,6 +31,7 @@ class requestHandler(BaseHTTPRequestHandler):
 			res['num'] = num
 			res['title'] = title
 			res['content'] = content
+			res['grade'] = grading(url)
 		elif parsed_path.path == '/expand':
 			url = parsed_path.query.split('=')[1]
 			while isShorten(url) == True:
@@ -39,6 +41,14 @@ class requestHandler(BaseHTTPRequestHandler):
 			url = parsed_path.query.split('=')[1]
 			_, domain, _=parseURL(url)
 			res['evil'] = str(urlcompare(domain))
+		elif parsed_path.path == '/grade':
+			url = parsed_path.query.split('=')[1]
+			while isShorten(url) == True:
+				_, url = get(url)
+			print('URL:', url)
+			grade = grading(url)
+			res['grade'] = grade
+			print('Grade:', grade)
 		elif parsed_path.path == '/search':
 			url = parsed_path.query.split('=')[1]
 			num, title, content = search(url)
@@ -49,9 +59,7 @@ class requestHandler(BaseHTTPRequestHandler):
 		
 		self.send_response(200)
 		self.end_headers()
-		# result = json.dumps(res)
 		result = makeHTML(json.dumps(res))
-		print('Result:', result)
 		self.wfile.write(result.encode('utf-8'))
 		return
 

@@ -15,7 +15,7 @@ def requestAPI(path, payload={}):
 	try:
 		response = requests.get(url, params=payload)
 	except requests.exception.RequestException as e:
-		print e
+		print(e)
 		sys.exit(1)
 
 	data = response.json()

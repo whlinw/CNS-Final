@@ -1,0 +1,4 @@
+run: python ./ssltest.py {target url}
+return value
+	first line: the actual SSL protocol version negotiated by the connection
+	second line: three-value tuple {ciphersuite,version of protocol that defines its use,number of secret bits being used}

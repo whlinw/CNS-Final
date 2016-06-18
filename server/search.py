@@ -10,7 +10,7 @@ GWS = 'https://www.google.com/search?q='
 def get_result(url):
 	q = GWS + url
 	req = Request(q)
-	req.add_header("User-Agent", "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101")
+	req.add_header("User-Agent", "Opera/9.80 (X11; Linux i686; U; ru) Presto/2.8.131 Version/11.11")
 	res = urlopen(req).read()
 	return res
 

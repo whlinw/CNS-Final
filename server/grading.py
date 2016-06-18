@@ -21,35 +21,41 @@ def alarm(time):
 	signal.signal(signal.SIGALRM, handler)
 	signal.alarm(time)
 def grading(url):
+
 	alarm(5)
-
+	bad = 0
+	if url[:5] != 'https':
+		bad = 1
 	# return sys.argv[1]
-	data = ssllabsscanner.resultsFromCache(sys.argv[1])
-
+	data = ssllabsscanner.resultsFromCache(url)
 	score = 0
 
 	if 'endpoints' in data and 'grade' in data['endpoints'][0]:
-		return (data['endpoints'][0]['grade'])
+		# print type(data['endpoints'][0]['grade'])
+		return chr(ord(str(data['endpoints'][0]['grade'])) + bad)
 	else:
 		# return "GG"
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		ssl_sock = ssl.wrap_socket(s,cert_reqs=ssl.CERT_REQUIRED,ca_certs=None)
-		ssl_sock.connect((sys.argv[1],443))
+		ssl_sock.connect((url,443))
 		wanted = ssl_sock.cipher()[0]
 		score = 100 - (float(100) / len(pref_order)) * pref_order.index(wanted)
-		if ssl_sock.version()[:5] != 'TLSv1':
-			return 'F'
-
-		elif pref_order.index(wanted) < 6:
-			return 'A'
-
-		elif pref_order.index(wanted) < 12:
-			return 'B'
 		
-		elif pref_order.index(wanted) < 26:
-			return 'C'
-		else:
-			return 'D'
+
+		if pref_order.index(wanted) < 6:
+			grade = 'A'
+ 
+		elif pref_order.index(wanted) < 12:
+			grade = 'B'
+		
+		elif pref_order.index(wanted) < 18:
+			grade = 'C'
+
+		if ssl_sock.version()[:5] != 'TLSv1':
+			grade += 1
+
+		return chr(ord(grade) + bad)
+
 if __name__ == '__main__':
 	result = grading(sys.argv[1])
 	print result

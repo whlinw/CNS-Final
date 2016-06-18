@@ -1,14 +1,14 @@
 /* Script inserted to web page */
+var shortUrlDomain = ['http://bit.ly/', 'http:s//goo.gl/', 'http://ppt.cc/', 'http://0rz.tw/', 'http://tinyurl.com/', 'https://4fun.tw/', 'http://mcaf.ee/', 'http://baidu.nu/', 'http://t.cn/']
+
 window.addEventListener("mouseover", function(event)
 {
     var link = event.target;
     while (link && link.localName != "a"){
       link = link.parentNode;
     }
-    if (link) {
-    	console.log(link.href);
-    	res = httpGet(link.href);	// no response
-    	console.log(res);
+
+    if (link && isShort(link.href)) {
         show(link);
     }
 }, false);
@@ -26,16 +26,14 @@ function show(link)
 {
     var tooltip = document.createElement('div');
     tooltip.className = 'tooltip';
-    tooltip.innerHTML = '<div class="tooltip-loader">HELLO</div>';
-
+    tooltip.innerHTML = '<iframe src="https://140.112.30.32:4443/analyze?url=' + link.href + '" style="background-color:white;"/>';
     link.appendChild(tooltip);
 }
 
-/* Doesn't Work */
-function httpGet(theUrl)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl); // false for synchronous request
-    xmlHttp.send();
-    return xmlHttp.responseText;
+function isShort(url){
+    for (var i = 0; i < 9; i++){
+        if (url.indexOf(shortUrlDomain[i]) > -1)
+            return true;
+    }
+    return false;
 }

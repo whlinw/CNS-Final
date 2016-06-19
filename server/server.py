@@ -1,18 +1,19 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import ssl
+import os, ssl, json
 import urllib.parse as urlparse
 import http.client as httplib
-import json
-from urlcompare import urlcompare
 from search import search
 from makeHTML import makeHTML
 from grading import grading
 
-HOST = '140.112.30.39'
+HOST = '140.112.30.32'
 PORT = 4443
 
+BLACKLIST_PATH = './blacklists/'
+blacklist = []
+
 # List of URL shorten service
-USS = ['goo.gl', 'bit.ly', 'ppt.cc', 'tinyurl.com', '0rz.tw', 'ow.ly']
+USS = ['goo.gl', 'bit.ly', 'ppt.cc', 'tinyurl.com', '0rz.tw', '4fun.tw', 'mcaf.ee', 'baidu.nu', 't.cn', 'ow.ly']
 
 class requestHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
@@ -26,7 +27,7 @@ class requestHandler(BaseHTTPRequestHandler):
 				_, url = get(url)
 			res['url'] = url
 			prot, domain, path = parseURL(url)
-			res['evil'] = str(urlcompare(domain))
+			res['evil'] = isEvil(domain)
 			num, title, content = search(url)
 			res['num'] = num
 			res['title'] = title
@@ -40,7 +41,7 @@ class requestHandler(BaseHTTPRequestHandler):
 		elif parsed_path.path == '/check':
 			url = parsed_path.query.split('=')[1]
 			_, domain, _=parseURL(url)
-			res['evil'] = str(urlcompare(domain))
+			res['evil'] = isEvil(domain)
 		elif parsed_path.path == '/grade':
 			url = parsed_path.query.split('=')[1]
 			while isShorten(url) == True:
@@ -103,6 +104,21 @@ def isShorten(url):
 	else:
 		return False
 
+def load_blacklist(list_path):
+	global blacklist
+	for i in os.listdir(list_path):
+		if 'domains' in os.listdir(list_path + i):
+			with open(list_path + i + '/domains') as f:
+				for line in f:
+					blacklist.append(line[:-1])
+	return
+
+def isEvil(domain):
+	if domain in blacklist:
+		return str(True)
+	else:
+		return str(False)
+
 def run():
 	httpd = HTTPServer((HOST, PORT), requestHandler)
 	httpd.socket = ssl.wrap_socket (httpd.socket, keyfile="./domain.key", certfile='./domain.crt', server_side=True)
@@ -110,4 +126,5 @@ def run():
 	httpd.serve_forever()
 
 if __name__ == '__main__':
+	load_blacklist(BLACKLIST_PATH)
 	run()

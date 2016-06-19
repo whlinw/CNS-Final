@@ -1,5 +1,5 @@
 /* Script inserted to web page */
-var shortUrlDomain = ['http://bit.ly/', 'http:s//goo.gl/', 'http://ppt.cc/', 'http://0rz.tw/', 'http://tinyurl.com/', 'https://4fun.tw/', 'http://mcaf.ee/', 'http://baidu.nu/', 'http://t.cn/']
+var shortUrlDomain = ['http://bit.ly/', 'http://goo.gl/', 'https://goo.gl/', 'http://ppt.cc/', 'http://0rz.tw/', 'http://tinyurl.com/', 'https://4fun.tw/', 'http://mcaf.ee/', 'http://baidu.nu/', 'http://t.cn/']
 
 window.addEventListener("mouseover", function(event)
 {

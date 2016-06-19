@@ -3,8 +3,9 @@ import sys
 import socket
 import ssl
 import signal
-import urllib2
-
+# import urllib2
+from urllib.request import urlopen
+from urllib.error import URLError, HTTPError
 
 pref_order = ['ECDHE-RSA-AES256-GCM-SHA384', 'ECDHE-ECDSA-AES256-GCM-SHA384', 'ECDHE-RSA-AES256-SHA384', 
 'ECDHE-ECDSA-AES256-SHA384', 'ECDHE-RSA-AES256-SHA', 'ECDHE-ECDSA-AES256-SHA', 'DHE-DSS-AES256-GCM-SHA384', 
@@ -22,11 +23,11 @@ def alarm(time):
 	signal.alarm(time)
 def grading(url):
 	try:
-	    urllib2.urlopen(url)
-	except urllib2.HTTPError, e:
+	    urlopen(url)
+	except HTTPError as e:
 		#print e.code, '1'
 		return 'HTTP Error'
-	except urllib2.URLError, e:
+	except URLError as e:
 		#print e.args, '2'
 		return 'Invalid URL'
 
@@ -66,7 +67,7 @@ def grading(url):
 
 if __name__ == '__main__':
 	result = grading(sys.argv[1])
-	print result
+	print(result)
 
 
 

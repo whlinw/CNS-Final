@@ -32,7 +32,10 @@ class requestHandler(BaseHTTPRequestHandler):
 			res['num'] = num
 			res['title'] = title
 			res['content'] = content
-			res['grade'] = grading(url)
+			if prot != 'https':
+				res['grade'] = 'F'
+			else:
+				res['grade'] = grading(url)
 		elif parsed_path.path == '/expand':
 			url = parsed_path.query.split('=')[1]
 			while isShorten(url) == True:

@@ -26,7 +26,7 @@ function show(link)
 {
     var tooltip = document.createElement('div');
     tooltip.className = 'tooltip';
-    tooltip.innerHTML = '<iframe src="https://140.112.30.32:4443/analyze?url=' + link.href + '" style="background-color:white;"/>';
+    tooltip.innerHTML = '<iframe src="https://140.112.30.32:4443/analyze?url=' + link.href + '" style="background-color:white;" width="380" height="420"/>';
     link.appendChild(tooltip);
 }
 

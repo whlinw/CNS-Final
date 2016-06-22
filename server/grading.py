@@ -21,6 +21,7 @@ def alarm(time):
 		exit()
 	signal.signal(signal.SIGALRM, handler)
 	signal.alarm(time)
+	
 def grading(url):
 	try:
 	    urlopen(url)

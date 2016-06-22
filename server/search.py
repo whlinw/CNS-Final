@@ -21,14 +21,16 @@ def search(url):
 	print('Num:', num)
 	if len(num) > 2:
 		num = ''.join(num[1].split(','))
-	else:
+	elif len(num) > 0:
 		num = ''.join(num[0].split(','))
+	else:
+		num = '0'
 	if int(num) != 0:
 		title = parsed_html.body.find('h3', attrs={'class':'r'}).text
 		content = ' '.join(parsed_html.body.find('span', attrs={'class':'st'}).text.split('\n'))
 	else:
-		title = None
-		content = None
+		title = 'None'
+		content = 'None'
 	return num, title, content
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ def get_data(content):
 	</thead>
 	<tbody>
 	"""
-	<div class="table-responsive">
+	# <div class="table-responsive">
 	print('JSON:', data)
 	if data['evil'] == 'True':
 		table += '<tr class="table-error"><th scope="row">' + 'URL' + '</th>' + '<td class="col-md-4">' + data['url'] + '</td></tr>'
@@ -54,7 +54,7 @@ def get_data(content):
 	table += '<tr><th scope="row">' + '# Result' + '</th>' + '<td class="col-md-4">' + data['num'] + '</td></tr>'
 	table += '<tr><th scope="row">' + 'Title' + '</th>' + '<td class="col-md-4">' + data['title'] + '</td></tr>'
 	table += '<tr><th scope="row">' + 'Description' + '</th>' + '<td class="col-md-4">' + data['content'][:200] + '</td></tr>'
-	table += '</tbody></table></div></div>'
+	table += '</tbody></table></div>' #</div>'
 	return table	
 
 def get_data_callout(content):

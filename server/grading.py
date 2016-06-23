@@ -45,9 +45,13 @@ def grading(url):
 		return chr(ord(str(data['endpoints'][0]['grade'])) + bad)
 	else:
 		# return "GG"
+		url2 = url.split('//')[1]
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		ssl_sock = ssl.wrap_socket(s,cert_reqs=ssl.CERT_REQUIRED,ca_certs=None)
-		ssl_sock.connect((url,443))
+		try:
+			ssl_sock.connect((url2,443))
+		except ssl.SSLError:
+			return 'B'
 		wanted = ssl_sock.cipher()[0]
 		score = 100 - (float(100) / len(pref_order)) * pref_order.index(wanted)
 		
